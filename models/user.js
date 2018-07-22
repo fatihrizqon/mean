@@ -56,6 +56,7 @@ module.exports.addUser = function(newUser, callback){
     });
 }
 
+
 module.exports.getUserByNim = function(nim, callback){
     const query = {nim: nim}
     User.findOne(query, callback);

@@ -108,12 +108,10 @@ export class ProfileComponent implements OnInit {
 
     // Update Account
     this.authService.updateAccount(user).subscribe(data => {
-      if(data.success){
-        this.flashMessage.success('PESAN : Data Anda Telah Diperbarui.', {delay: 5000});
-        this.router.navigate(['/']);
-      }else{
+      if(!data.success){
         this.flashMessage.warning('PERHATIAN : '+data.msg, {delay: 5000});
-        this.router.navigate(['/']);
+      }else{
+        this.flashMessage.success('PESAN : Data Anda Telah Diperbarui.', {delay: 5000});
       }
     });
   }

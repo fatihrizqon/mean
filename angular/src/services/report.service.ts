@@ -13,8 +13,8 @@ export class ReportService {
     private http:Http,
   ) { }
 
-  private baseUri:String='';
-  // private baseUri:String='http://localhost:8080/';
+  // private baseUri:String='';
+  private baseUri:String='http://localhost:8080/';
   // private baseUri:String='http://192.168.100.10:3000';
 
   loadToken(){

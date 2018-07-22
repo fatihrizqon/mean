@@ -7,6 +7,7 @@ const User     = require('../models/user');
 const Company  = require('../models/company');
 const ObjectId = require('mongodb').ObjectID;
 const mongoose = require('mongoose');
+const bcrypt   = require('bcryptjs');
 
 router.get('/', passport.authenticate('jwt', {session:false}), (req, res, next)=>{
     User.find(function (err, user) {
@@ -59,10 +60,12 @@ router.post('/register', (req, res, next) =>{
     }else{
       angkatan = "Unknown";
     }
-
-    if(prodi == "Unknown"){
+    var fakultas = nim.substr(2,1);
+    if(prodi == "Unknown" || nim.length != 11 || fakultas != '5'){
         console.log("NIM yang anda masukkan tidak valid.");
-        return res.status(401).send({message: "NIM yang anda masukkan tidak valid."});
+        return res.json({success:false, msg:'NIM yang anda masukkan tidak valid.'});
+    }else{
+        console.log("NIM Valid")
     }
 
     let newUser = new User({
@@ -336,12 +339,12 @@ router.put('/updateAccount', passport.authenticate('jwt', {session:false}), (req
     }else{
       angkatan = "Unknown";
     }
-
-    if(prodi == "Unknown"){
+    var fakultas = nim.substr(2,1);
+    if(prodi == "Unknown" || nim.length != 11 || fakultas != '5'){
         console.log("NIM yang anda masukkan tidak valid.");
-        return res.status(401).send({message: "NIM yang anda masukkan tidak valid."});
+        return res.json({success:false, msg:'NIM yang anda masukkan tidak valid.'});
     }
-
+    var password;
     let user = {
         nim      : req.body.nim,
         nama     : req.body.nama,
@@ -366,7 +369,15 @@ router.put('/updateAccount', passport.authenticate('jwt', {session:false}), (req
                 }
             });
         }else{
-            console.log("Data Berhasil Dirubah.");
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(user.password, salt, (err, hash) => { 
+                    if(err){
+                        throw err;
+                    }
+                    user.password = hash;
+                    user.save();
+                });
+            });
             res.json({success:true, msg:'PESAN : Data Berhasil Dirubah.'});
         }
     });
