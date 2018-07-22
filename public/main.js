@@ -3197,8 +3197,7 @@ var AuthService = /** @class */ (function () {
     function AuthService(router, http) {
         this.router = router;
         this.http = http;
-        // private baseUri:String='';
-        this.baseUri = 'http://localhost:8080/';
+        this.baseUri = '';
     }
     AuthService.prototype.registerUser = function (user) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
@@ -3352,8 +3351,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var CompanyService = /** @class */ (function () {
     function CompanyService(http) {
         this.http = http;
-        // private baseUri:String='';  
-        this.baseUri = 'http://localhost:8080/';
+        this.baseUri = '';
     }
     CompanyService.prototype.loadToken = function () {
         var token = localStorage.getItem('id_token');
@@ -3440,9 +3438,9 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var ReportService = /** @class */ (function () {
     function ReportService(http) {
         this.http = http;
-        // private baseUri:String='';
-        this.baseUri = 'http://localhost:8080/';
+        this.baseUri = '';
     }
+    // private baseUri:String='http://localhost:8080/';
     // private baseUri:String='http://192.168.100.10:3000';
     ReportService.prototype.loadToken = function () {
         var token = localStorage.getItem('id_token');
